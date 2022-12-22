@@ -1,11 +1,11 @@
 import os
 import glob
 import pandas as pd
-import datetime
 import logging
+from logging_config import configure_logging
 
-# Get the logger from the main module
-logger = logging.getLogger(__name__)
+# configure logging for this module
+logger = configure_logging()
 
 
 def is_csv_file(file):
@@ -14,11 +14,11 @@ def is_csv_file(file):
 
 
 def delete_files(root, file_pattern):
-    try:
-        for file in glob.glob(os.path.join(root, file_pattern)):  # Find all files matching the pattern
-            os.remove(file)  # Delete the file if it exists
-    except FileNotFoundError:
-        logging.info(f'No files found matching pattern "{file_pattern}"')
+    for file in glob.glob(os.path.join(root, '**', file_pattern), recursive=True):
+        try:
+            os.remove(file)
+        except FileNotFoundError:
+            logging.info(f'No files found matching pattern "{file_pattern}"')
 
 
 def read_csv_files(root_path):
