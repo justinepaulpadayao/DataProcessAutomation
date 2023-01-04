@@ -1,6 +1,4 @@
 # import necessary modules
-import datetime
-
 import logging
 import logging_config
 from data_functions import read_csv_files, save_combined_csv, save_new_columns_csv
