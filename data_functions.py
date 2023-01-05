@@ -81,12 +81,26 @@ def get_financial_id(base_name):
 
 
 def read_csv_with_headers_in_row(filename, row_number):
+    """
+    Reads a CSV file and returns a data frame. The specified row number is used as the header.
+
+    Parameters:
+    - filename (str): The name of the CSV file to read.
+    - row_number (int): The row number to use as the header.
+
+    Returns:
+    - df (pandas.DataFrame): The data frame created from the CSV file.
+
+    Exceptions:
+    - pd.errors.EmptyDataError: If the file is empty or has no data.
+    - UnicodeDecodeError: If there is a problem with the encoding of the file.
+    """
     try:
         df = pd.read_csv(filename, header=row_number - 1)
     except pd.errors.EmptyDataError:
-        print("Error: The file is empty or has no data.")
+        logging.warning("Error: The file is empty or has no data.")
     except UnicodeDecodeError:
-        print("Error: There is a problem with the encoding of the file.")
+        logging.warning("Error: There is a problem with the encoding of the file.")
     return df
 
 
@@ -146,6 +160,18 @@ def read_csv_files(root_path):
 
 
 def save_combined_csv(df_list, root, filename):
+    """
+    Saves a combined data frame, which is the concatenation of all data frames in the df_list, to a CSV file with the
+    specified filename in the specified root directory.
+
+    Parameters:
+    - df_list (list): A list of data frames to be concatenated.
+    - root (str): The root directory to save the CSV file in.
+    - filename (str): The name of the CSV file to save.
+
+    Returns:
+    - None
+    """
     try:
         df = pd.concat(df_list, ignore_index=True)
         file_path = os.path.join(root, filename)  # Construct the full file path
@@ -159,6 +185,19 @@ def save_combined_csv(df_list, root, filename):
 
 
 def save_new_columns_csv(new_columns_list, root, filename):
+    """
+    Saves a data frame containing new columns found in the CSV files to a CSV file with the specified filename in the
+    specified root directory.
+
+    Parameters:
+    - new_columns_list (list): A list of data frames containing the new columns found in each CSV file. Each data
+      frame contains a 'Location' column indicating the base name of the file in which the new columns were found.
+    - root (str): The root directory to save the CSV file in.
+    - filename (str): The name of the CSV file to save.
+
+    Returns:
+    - None
+    """
     try:
         new_columns_df = pd.concat(new_columns_list, ignore_index=True)
         if not new_columns_df.empty:
