@@ -7,7 +7,6 @@ import re
 import datetime
 import logging_config
 
-
 # configure logging for this module
 logger = logging_config.configure_logging()
 
@@ -35,6 +34,7 @@ def delete_files(root, file_pattern):
         for file in files:
             try:
                 os.remove(file)
+                logging.info(f'Deleted file {file}')
             except FileNotFoundError:
                 logging.info(f'No files found matching pattern "{file_pattern}"')
 
@@ -80,6 +80,16 @@ def get_financial_id(base_name):
     return base_name
 
 
+def read_csv_with_headers_in_row(filename, row_number):
+    try:
+        df = pd.read_csv(filename, header=row_number - 1)
+    except pd.errors.EmptyDataError:
+        print("Error: The file is empty or has no data.")
+    except UnicodeDecodeError:
+        print("Error: There is a problem with the encoding of the file.")
+    return df
+
+
 def read_csv_files(root_path):
     """
     Reads all CSV files in the directories and subdirectories of the specified root path, and returns a list of the data
@@ -112,7 +122,11 @@ def read_csv_files(root_path):
         file_pattern = os.path.join(root, '*.csv')
         for file in glob.glob(file_pattern):
             logging.info(f'Reading file {file}...')
-            df = pd.read_csv(file, index_col=False)
+            try:
+                df = pd.read_csv(file, index_col=False)
+            except pd.errors.ParserError:
+                logging.info(f'File {file} is not a valid CSV file. Trying again with headers in row 3...')
+                df = read_csv_with_headers_in_row(file, 3)
             base_name = os.path.splitext(os.path.basename(file))[0]  # Get the base name of the file (without the
             # extension)
             df['Location'] = get_financial_id(base_name)  # Add a new column to the data frame
