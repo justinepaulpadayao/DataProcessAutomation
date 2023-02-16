@@ -1,0 +1,226 @@
+{
+   "1101": [
+      {
+         "Account": "Euclid Office",
+         "Code": "Office"
+      }
+   ],
+   "1300": [
+      {
+         "Account": "Westminster",
+         "Code": "WE"
+      }
+   ],
+   "1301": [
+      {
+         "Account": "Euclid",
+         "Code": "EU"
+      },
+      {
+         "Account": "Euclid",
+         "Code": "EU"
+      }
+   ],
+   "1302": [
+      {
+         "Account": "Cypress",
+         "Code": "CY"
+      },
+      {
+         "Account": "Cypress",
+         "Code": "CY"
+      }
+   ],
+   "1303": [
+      {
+         "Account": "Fountain Valley",
+         "Code": "FV"
+      },
+      {
+         "Account": "Fountain Valley",
+         "Code": "FV"
+      }
+   ],
+   "1304": [
+      {
+         "Account": "Huntington Beach",
+         "Code": "HB"
+      },
+      {
+         "Account": "Huntington Beach",
+         "Code": "HB"
+      }
+   ],
+   "1305": [
+      {
+         "Account": "Irvine",
+         "Code": "IR"
+      },
+      {
+         "Account": "Irvine",
+         "Code": "IR"
+      }
+   ],
+   "1306": [
+      {
+         "Account": "Chino Hills",
+         "Code": "CH"
+      },
+      {
+         "Account": "Chino Hills",
+         "Code": "CH"
+      }
+   ],
+   "1307": [
+      {
+         "Account": "Costa Mesa",
+         "Code": "CM"
+      }
+   ],
+   "1308": [
+      {
+         "Account": "Tustin",
+         "Code": "TU"
+      }
+   ],
+   "1309": [
+      {
+         "Account": "Alhambra",
+         "Code": "AL"
+      },
+      {
+         "Account": "Alhambra",
+         "Code": "AL"
+      }
+   ],
+   "1310": [
+      {
+         "Account": "Artesia",
+         "Code": "AR"
+      },
+      {
+         "Account": "Artesia",
+         "Code": "AR"
+      }
+   ],
+   "1311": [
+      {
+         "Account": "Brookhurst",
+         "Code": "BH"
+      },
+      {
+         "Account": "Brookhurst",
+         "Code": "BH"
+      }
+   ],
+   "1313": [
+      {
+         "Account": "Anaheim",
+         "Code": "AN"
+      },
+      {
+         "Account": "Anaheim",
+         "Code": "AN"
+      }
+   ],
+   "1316": [
+      {
+         "Account": "Downey",
+         "Code": "DO"
+      }
+   ],
+   "1320": [
+      {
+         "Account": "El Monte",
+         "Code": "EM"
+      }
+   ],
+   "1321": [
+      {
+         "Account": "Fullerton",
+         "Code": "FU"
+      }
+   ],
+   "1322": [
+      {
+         "Account": "Santa Ana",
+         "Code": "SA"
+      }
+   ],
+   "1323": [
+      {
+         "Account": "Artisan",
+         "Code": "Artisan"
+      }
+   ],
+   "1324": [
+      {
+         "Account": "Chapman",
+         "Code": "CP"
+      }
+   ],
+   "1325": [
+      {
+         "Account": "Diamond Jamboree",
+         "Code": "DJ"
+      }
+   ],
+   "1326": [
+      {
+         "Account": "Covina",
+         "Code": "CO"
+      }
+   ],
+   "1327": [
+      {
+         "Account": "Edinger",
+         "Code": "FV3"
+      }
+   ],
+   "1328": [
+      {
+         "Account": "Montebello",
+         "Code": ""
+      }
+   ],
+   "7312": [
+      {
+         "Account": "Bristol",
+         "Code": "BR"
+      },
+      {
+         "Account": "Bristol",
+         "Code": "BR"
+      }
+   ],
+   "7314": [
+      {
+         "Account": "Rowland Heights",
+         "Code": "RH"
+      }
+   ],
+   "7315": [
+      {
+         "Account": "Rincon (CH2)",
+         "Code": "RN"
+      }
+   ],
+   "7317": [
+      {
+         "Account": "Torrance (Western)",
+         "Code": "TO"
+      }
+   ],
+   "7318": [
+      {
+         "Account": "Cerritos (Pioneer)",
+         "Code": "CE"
+      }
+   ],
+   "7319": [
+      {
+         "Account": "Riverside (University)",
+         "Code": "RS"
+      }
+   ]
+}
