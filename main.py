@@ -1,12 +1,11 @@
 # import necessary modules
-import logging
-import logging_config
+from loguru import logger
 from data_functions import read_csv_files, save_combined_csv, save_new_columns_csv
 
 
 def main():
     """
-    Entry point of the program. Configures logging, reads the CSV files in the root path and its subdirectories, and
+    Entry point of the program. Configures logger, reads the CSV files in the root path and its subdirectories, and
     saves the combined data frame and new columns data frame to CSV files.
 
     Parameters:
@@ -15,13 +14,13 @@ def main():
     Returns:
     - None
     """
-    logger = logging_config.configure_logging()  # Configure the logging
-    root_path = r"I:\Shared drives\Data Analysis\Data\Bank Downloads 2022"
+    root_path = r"I:\.shortcut-targets-by-id\1DcqaOLF_6OUJ0Ttaglh4tYvvqAcUZ0M5\Bank Downloads\2023\Daily"
     try:
+        logger.info(f"Reading CSV files in {root_path} and its subdirectories...")
         read_csv_files(root_path)
-        logging.info('Code ran successfully and without errors')  # Log a message if the code ran successfully
+        logger.success('Code ran successfully and without errors')  # Log a message if the code ran successfully
     except Exception as e:
-        logging.exception(e)  # Log the exception if an error occurred
+        logger.error(e)  # Log the exception if an error occurred
 
 
 if __name__ == '__main__':

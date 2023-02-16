@@ -1,14 +1,10 @@
 import os
 import glob
 import pandas as pd
-import logging
 import json
 import re
 import datetime
-import logging_config
-
-# configure logging for this module
-logger = logging_config.configure_logging()
+from loguru import logger
 
 
 def is_csv_file(file):
@@ -29,14 +25,14 @@ def delete_files(root, file_pattern):
     """
     files = glob.glob(os.path.join(root, '**', file_pattern), recursive=True)
     if not files:
-        logging.info(f'No files found matching pattern "{file_pattern}"')
+        logger.info(f'No files found matching pattern "{file_pattern}"')
     else:
         for file in files:
             try:
                 os.remove(file)
-                logging.info(f'Deleted file {file}')
+                logger.success(f'Deleted file {file}')
             except FileNotFoundError:
-                logging.info(f'No files found matching pattern "{file_pattern}"')
+                logger.info(f'No files found matching pattern "{file_pattern}"')
 
 
 def extract_last_four_digits(base_name):
@@ -76,7 +72,7 @@ def get_financial_id(base_name):
     for code in bank_codes:
         if code['Last Four Digits'] == last_four_digits:
             return code['Financial account ID']
-    logging.warning(f'Base name "{base_name}" not found in bank codes data')
+    logger.info(f'Base name "{base_name}" not found in bank codes data. Using base name as financial ID.')
     return base_name
 
 
@@ -98,9 +94,9 @@ def read_csv_with_headers_in_row(filename, row_number):
     try:
         df = pd.read_csv(filename, header=row_number - 1)
     except pd.errors.EmptyDataError:
-        logging.warning("Error: The file is empty or has no data.")
+        logger.error("Error: The file is empty or has no data.")
     except UnicodeDecodeError:
-        logging.warning("Error: There is a problem with the encoding of the file.")
+        logger.error("Error: There is a problem with the encoding of the file.")
     return df
 
 
@@ -135,18 +131,18 @@ def read_csv_files(root_path):
         # Find all CSV files in the current directory
         file_pattern = os.path.join(root, '*.csv')
         for file in glob.glob(file_pattern):
-            logging.info(f'Reading file {file}...')
+            logger.info(f'Reading file {file}...')
             try:
                 df = pd.read_csv(file, index_col=False)
             except pd.errors.ParserError:
-                logging.info(f'File {file} is not a valid CSV file. Trying again with headers in row 3...')
+                logger.warning(f'File {file} is not a valid CSV file. Trying again with headers in row 3...')
                 df = read_csv_with_headers_in_row(file, 3)
             base_name = os.path.splitext(os.path.basename(file))[0]  # Get the base name of the file (without the
             # extension)
             df['Location'] = get_financial_id(base_name)  # Add a new column to the data frame
             new_columns = set(df.columns) - set(df_list[0].columns) if df_list else set()
             if new_columns:
-                logging.info(f'Found new columns {new_columns} in file {file}')
+                logger.info(f'Found new columns {new_columns} in file {file}')
                 new_columns_df = df[list(new_columns)].copy()
                 new_columns_df.loc[:, 'Location'] = base_name  # Use .loc to set the value of the 'filename' column
                 new_columns_list.append(new_columns_df)
@@ -175,11 +171,12 @@ def save_combined_csv(df_list, root, filename):
     try:
         df = pd.concat(df_list, ignore_index=True)
         file_path = os.path.join(root, filename)  # Construct the full file path
-        logging.info(f'Saving combined data frame to file {filename}...')
+        logger.info(f'Saving combined data frame to file {filename}...')
         df.to_csv(file_path, index=False)
+        logger.success(f'Saved combined data frame to file {filename} successfully.')
     except ValueError as e:
         if str(e) == "No objects to concatenate":
-            logging.error("Error on Combined Transactions Data: No objects to concatenate")
+            logger.error("Error on Combined Transactions Data: No objects to concatenate")
         else:
             raise e
 
@@ -202,10 +199,10 @@ def save_new_columns_csv(new_columns_list, root, filename):
         new_columns_df = pd.concat(new_columns_list, ignore_index=True)
         if not new_columns_df.empty:
             file_path = os.path.join(root, filename)  # Construct the full file path
-            logging.info(f'Saving new columns data frame to file {filename}...')
+            logger.info(f'Saving new columns data frame to file {filename}...')
             new_columns_df.to_csv(file_path)
     except ValueError as e:
         if str(e) == "No objects to concatenate":
-            logging.error("Error on New Columns: No objects to concatenate")
+            logger.error("Error on New Columns: No objects to concatenate")
         else:
             raise e
