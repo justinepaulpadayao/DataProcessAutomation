@@ -14,10 +14,14 @@ def main():
     Returns:
     - None
     """
-    root_path = r"I:\.shortcut-targets-by-id\1DcqaOLF_6OUJ0Ttaglh4tYvvqAcUZ0M5\Bank Downloads\2023\Daily"
+    logger.add("log_files/{time}_main.log", rotation="1 week", retention="1 month", level="INFO")
+    root_path1 = r"G:\.shortcut-targets-by-id\1DcqaOLF_6OUJ0Ttaglh4tYvvqAcUZ0M5\Bank Downloads\2023\Daily"
+    root_path2 = r"G:\.shortcut-targets-by-id\1DcqaOLF_6OUJ0Ttaglh4tYvvqAcUZ0M5\Bank Downloads\2023\Weekly BOW"
     try:
-        logger.info(f"Reading CSV files in {root_path} and its subdirectories...")
-        read_csv_files(root_path)
+        logger.info(f"Reading CSV files in {root_path1} and its subdirectories...")
+        read_csv_files(root_path1)
+        logger.info(f"Reading CSV files in {root_path2} and its subdirectories...")
+        read_csv_files(root_path2)
         logger.success('Code ran successfully and without errors')  # Log a message if the code ran successfully
     except Exception as e:
         logger.error(e)  # Log the exception if an error occurred
